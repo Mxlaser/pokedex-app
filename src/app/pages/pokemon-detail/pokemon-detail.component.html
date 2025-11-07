@@ -1,1 +1,50 @@
-<h1>Pokémon #</h1>
+<a routerLink="/" class="back">&larr; Retour</a>
+
+<section *ngIf="loading(); else contentTpl" class="loading">
+  Chargement…
+</section>
+
+<ng-template #contentTpl>
+  <section *ngIf="!error(); else errTpl" class="card">
+    <header class="header">
+      <img
+        *ngIf="data()?.sprites?.front_default as img"
+        [src]="img"
+        [alt]="nameCap()" width="120" height="120"
+      />
+      <div class="title">
+        <h1>#{{ data()?.id }} {{ nameCap() }}</h1>
+        <div class="types">
+          <span class="type" *ngFor="let t of data()?.types; trackBy: trackByType">
+            {{ t.type.name }}
+          </span>
+        </div>
+      </div>
+      <button type="button" class="fav" (click)="onToggleFavorite()" title="Ajouter aux favoris">
+        ★
+      </button>
+    </header>
+
+    <div class="meta">
+      <div><strong>Taille</strong> {{ (data()?.height ?? 0) / 10 }} m</div>
+      <div><strong>Poids</strong> {{ (data()?.weight ?? 0) / 10 }} kg</div>
+    </div>
+
+    <section class="stats">
+      <h2>Statistiques</h2>
+      <ul>
+        <li *ngFor="let s of data()?.stats; trackBy: trackByStat">
+          <span class="stat-name">{{ s.stat.name }}</span>
+          <span class="bar">
+            <i [style.width.%]="s.base_stat / 2"></i>
+          </span>
+          <span class="val">{{ s.base_stat }}</span>
+        </li>
+      </ul>
+    </section>
+  </section>
+</ng-template>
+
+<ng-template #errTpl>
+  <div class="error">{{ error() }}</div>
+</ng-template>
