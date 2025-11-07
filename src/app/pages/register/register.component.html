@@ -1,1 +1,22 @@
-<h1>Register</h1>
+<h1>Créer un compte</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <label>Nom d'utilisateur</label>
+  <input type="text" formControlName="username" />
+  <small *ngIf="form.get('username')?.dirty && form.get('username')?.errors?.['required']">Requis</small>
+  <small *ngIf="form.get('username')?.errors?.['minlength']">Min 3 caractères</small>
+  <small *ngIf="form.get('username')?.errors?.['usernameTaken']">Déjà pris</small>
+
+  <label>Mot de passe</label>
+  <input type="password" formControlName="password" />
+  <small *ngIf="form.get('password')?.errors?.['minlength']">Min 6 caractères</small>
+
+  <label>Confirmer</label>
+  <input type="password" formControlName="confirmPassword" />
+  <small *ngIf="form.errors?.['passwordMismatch']">Les mots de passe ne correspondent pas</small>
+
+  <button type="submit" [disabled]="form.invalid || loading">S'inscrire</button>
+  <p *ngIf="error" style="color:red">{{ error }}</p>
+</form>
+
+<p>Déjà un compte ? <a routerLink="/login">Se connecter</a></p>

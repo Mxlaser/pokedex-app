@@ -5,12 +5,13 @@ import { RegisterComponent } from './pages/register/register.component';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PokemonDetailComponent } from './pages/pokemon-detail/pokemon-detail.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'favorites', component: FavoritesComponent },
+  { path: 'favorites', component: FavoritesComponent, canActivate: [authGuard] },
   { path: 'pokemon/:id', component: PokemonDetailComponent },
   { path: '**', component: NotFoundComponent },
 ];

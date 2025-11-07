@@ -1,1 +1,12 @@
-<h1>Login</h1>
+<h1>Se connecter</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <label>Nom d'utilisateur</label>
+  <input type="text" formControlName="username" />
+  <label>Mot de passe</label>
+  <input type="password" formControlName="password" />
+  <button type="submit" [disabled]="form.invalid || loading">Connexion</button>
+  <p *ngIf="error" style="color:red">{{ error }}</p>
+</form>
+
+<p>Pas de compte ? <a routerLink="/register">Créer un compte</a></p>
