@@ -1,0 +1,19 @@
+.card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  display: grid;
+  gap: 8px;
+  transition: transform .12s ease;
+}
+.card:hover { transform: translateY(-2px); }
+
+.thumb img { width: 96px; height: 96px; image-rendering: pixelated; }
+
+.info .name { text-transform: capitalize; }
+
+.actions button {
+  border: none; background: #f5f5f5; padding: 6px 10px; border-radius: 8px; cursor: pointer;
+}
+.actions button:hover { filter: brightness(0.95); }

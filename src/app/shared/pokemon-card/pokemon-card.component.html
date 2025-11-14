@@ -1,0 +1,13 @@
+<article class="card">
+  <a [routerLink]="['/pokemon', id]" class="thumb">
+    <img [src]="image" [alt]="name" loading="lazy" />
+  </a>
+
+  <header class="info">
+    <h3>#{{ id }} <span class="name">{{ name }}</span></h3>
+  </header>
+
+  <footer class="actions">
+    <button type="button" (click)="onToggleFav()" title="Ajouter/retirer des favoris">★</button>
+  </footer>
+</article>
