@@ -1,0 +1,31 @@
+<section class="toolbar">
+  <form [formGroup]="form" class="filters" (submit)="$event.preventDefault()">
+    <input type="search" placeholder="Rechercher par nom…" formControlName="name" />
+
+    <select formControlName="type">
+      <option value="">Tous les types (à venir)</option>
+      <option *ngFor="let t of types()" [value]="t">{{ t }}</option>
+    </select>
+
+    <select formControlName="sort">
+      <option value="id">Trier par #id</option>
+      <option value="name">Trier par nom</option>
+    </select>
+  </form>
+</section>
+
+<section *ngIf="loading(); else listTpl" class="loading">
+  Chargement des Pokémon…
+</section>
+
+<ng-template #listTpl>
+  <section class="grid">
+    <app-pokemon-card
+      *ngFor="let p of filtered()"
+      [id]="p.id"
+      [name]="p.name"
+      [image]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + p.id + '.png'"
+      (toggleFavorite)="onToggleFavorite($event)">
+    </app-pokemon-card>
+  </section>
+</ng-template>

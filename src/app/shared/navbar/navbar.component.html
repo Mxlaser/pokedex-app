@@ -1,0 +1,13 @@
+<nav class="navbar">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+  <a routerLink="/favorites" routerLinkActive="active">Favoris</a>
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="(auth.isLoggedIn$ | async); else guest">
+    <button (click)="logout()">Se déconnecter</button>
+  </ng-container>
+  <ng-template #guest>
+    <a routerLink="/login" routerLinkActive="active">Se connecter</a>
+    <a routerLink="/register" routerLinkActive="active">Créer un compte</a>
+  </ng-template>
+</nav>

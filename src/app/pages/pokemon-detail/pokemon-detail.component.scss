@@ -1,0 +1,41 @@
+.back { display:inline-block; margin-bottom: 12px; text-decoration:none; }
+
+.card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+
+.title h1 { margin: 0; text-transform: capitalize; }
+
+.types {
+  display: flex; gap: 8px; margin-top: 6px;
+  .type {
+    padding: 4px 8px; border-radius: 999px;
+    background: #f3f3f3; text-transform: capitalize; font-size: 12px;
+  }
+}
+
+.fav {
+  border: none; background: #f5f5f5; padding: 8px 12px; border-radius: 10px; cursor: pointer;
+}
+
+.meta { display: flex; gap: 16px; }
+
+.stats ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.stat-name { width: 110px; display: inline-block; text-transform: capitalize; }
+.bar {
+  display: inline-block; width: 180px; height: 8px; background: #eee; border-radius: 8px; margin: 0 8px;
+  i { display: block; height: 100%; background: #8ecae6; border-radius: 8px; }
+}
+.error { padding: 12px; background: #fee; border: 1px solid #f99; border-radius: 8px; }
+.loading { padding: 10px; }
