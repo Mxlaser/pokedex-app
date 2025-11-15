@@ -1,0 +1,45 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  background: #1e1e2f;    // couleur fond (moderne)
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 16px;
+    transition: 0.2s;
+
+    &:hover {
+      color: #ffd447;
+    }
+
+    &.active {
+      font-weight: bold;
+      border-bottom: 2px solid #ffd447;
+      padding-bottom: 2px;
+    }
+  }
+
+  button {
+    background: #ffd447;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #1e1e2f;
+    transition: 0.2s;
+
+    &:hover {
+      background: #ffdf70;
+    }
+  }
+
+  .spacer {
+    flex: 1;
+  }
+}

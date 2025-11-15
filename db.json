@@ -6,5 +6,11 @@
       "password": "123456"
     }
   ],
-  "favorites": []
+  "favorites": [
+    {
+      "id": "61f4",
+      "userId": "de6a",
+      "pokemonId": 1
+    }
+  ]
 }

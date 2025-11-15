@@ -1,22 +1,59 @@
-<h1>Créer un compte</h1>
+<div class="register-page">
+  <div class="register-card">
 
-<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-  <label>Nom d'utilisateur</label>
-  <input type="text" formControlName="username" />
-  <small *ngIf="form.get('username')?.dirty && form.get('username')?.errors?.['required']">Requis</small>
-  <small *ngIf="form.get('username')?.errors?.['minlength']">Min 3 caractères</small>
-  <small *ngIf="form.get('username')?.errors?.['usernameTaken']">Déjà pris</small>
+    <h1>Créer un compte</h1>
 
-  <label>Mot de passe</label>
-  <input type="password" formControlName="password" />
-  <small *ngIf="form.get('password')?.errors?.['minlength']">Min 6 caractères</small>
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
 
-  <label>Confirmer</label>
-  <input type="password" formControlName="confirmPassword" />
-  <small *ngIf="form.errors?.['passwordMismatch']">Les mots de passe ne correspondent pas</small>
+      <div class="form-field">
+        <label for="username">Nom d'utilisateur</label>
+        <input id="username" type="text" formControlName="username" />
 
-  <button type="submit" [disabled]="form.invalid || loading">S'inscrire</button>
-  <p *ngIf="error" style="color:red">{{ error }}</p>
-</form>
+        <small class="error" *ngIf="form.get('username')?.dirty && form.get('username')?.errors?.['required']">
+          Requis
+        </small>
+        <small class="error" *ngIf="form.get('username')?.errors?.['minlength']">
+          Min 3 caractères
+        </small>
+        <small class="error" *ngIf="form.get('username')?.errors?.['usernameTaken']">
+          Déjà pris
+        </small>
+      </div>
 
-<p>Déjà un compte ? <a routerLink="/login">Se connecter</a></p>
+      <div class="form-field">
+        <label for="password">Mot de passe</label>
+        <input id="password" type="password" formControlName="password" />
+
+        <small class="error" *ngIf="form.get('password')?.errors?.['minlength']">
+          Min 6 caractères
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+
+        <small class="error" *ngIf="form.errors?.['passwordMismatch']">
+          Les mots de passe ne correspondent pas
+        </small>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="form.invalid || loading"
+      >
+        S'inscrire
+      </button>
+
+      <p *ngIf="error" class="error-msg">{{ error }}</p>
+
+    </form>
+
+    <p class="secondary">
+      Déjà un compte ?
+      <a routerLink="/login">Se connecter</a>
+    </p>
+
+  </div>
+</div>

@@ -20,27 +20,36 @@ export class RegisterComponent {
   auth = inject(AuthService);
   router = inject(Router);
 
-  form = this.fb.group({
-    username: ['', {
-      validators: [Validators.required, Validators.minLength(3)],
-      asyncValidators: [uniqueUsernameValidator(this.http)],
-      updateOn: 'blur'
-    }],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-    confirmPassword: ['', Validators.required]
-  }, { validators: [matchPassword('password', 'confirmPassword')] });
+  form = this.fb.group(
+    {
+      username: [
+        '',
+        {
+          validators: [Validators.required, Validators.minLength(3)],
+          asyncValidators: [uniqueUsernameValidator(this.http)]
+        }
+      ],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required]
+    },
+    { validators: [matchPassword('password', 'confirmPassword')] }
+  );
 
   loading = false;
   error: string | null = null;
 
   submit() {
     if (this.form.invalid) return;
-    this.loading = true; this.error = null;
+    this.loading = true;
+    this.error = null;
     const { username, password } = this.form.value as any;
     this.auth.register(username, password).subscribe({
       next: () => this.router.navigateByUrl('/'),
       error: (e) => {
-        this.error = e?.message === 'USERNAME_TAKEN' ? 'Nom d’utilisateur déjà pris.' : 'Erreur.';
+        this.error =
+          e?.message === 'USERNAME_TAKEN'
+            ? 'Nom d’utilisateur déjà pris.'
+            : 'Erreur.';
         this.loading = false;
       }
     });

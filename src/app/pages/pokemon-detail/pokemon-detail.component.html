@@ -10,21 +10,30 @@
       <img
         *ngIf="data()?.sprites?.front_default as img"
         [src]="img"
-        [alt]="nameCap()" width="120" height="120"
+        [alt]="nameCap()"
+        width="120"
+        height="120"
       />
+
       <div class="title">
         <h1>#{{ data()?.id }} {{ nameCap() }}</h1>
         <div class="types">
-          <span class="type" *ngFor="let t of data()?.types; trackBy: trackByType">
+          <span
+            class="type"
+            *ngFor="let t of data()?.types; trackBy: trackByType"
+          >
             {{ t.type.name }}
           </span>
         </div>
       </div>
+
       <button
         type="button"
         class="fav"
+        [class.fav--active]="isFavorite()"
         (click)="onToggleFavorite()"
-        title="Ajouter aux favoris">
+        title="Ajouter aux favoris"
+      >
         {{ isFavorite() ? '★' : '☆' }}
       </button>
     </header>
@@ -37,7 +46,10 @@
     <section class="stats">
       <h2>Statistiques</h2>
       <ul>
-        <li *ngFor="let s of data()?.stats; trackBy: trackByStat">
+        <li
+          *ngFor="let s of data()?.stats; trackBy: trackByStat"
+          class="stat-row"
+        >
           <span class="stat-name">{{ s.stat.name }}</span>
           <span class="bar">
             <i [style.width.%]="s.base_stat / 2"></i>
