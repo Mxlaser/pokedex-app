@@ -14,6 +14,8 @@ export class PokemonCardComponent {
   @Input() name!: string;
   @Input() image?: string;
 
+  @Input() isFavorite = false;
+
   @Output() toggleFavorite = new EventEmitter<number>();
 
   onToggleFav() {

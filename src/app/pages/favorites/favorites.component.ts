@@ -1,47 +1,76 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 import { FavoritesService } from '../../core/services/favorites.service';
+import { PokemonService } from '../../core/services/pokemon.service';
+import { Favorite } from '../../core/models/favorite';
+import { PokemonSummary } from '../../core/models/pokemon-summary.model';
 import { AuthService } from '../../core/services/auth.service';
-import { FormsModule } from '@angular/forms';
+import { PokemonCardComponent } from '../../shared/pokemon-card/pokemon-card.component';
 
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  template: `
-    <h1>Mes favoris</h1>
-    <div *ngIf="!user">Connectez-vous</div>
-    <ul *ngIf="user">
-      <li *ngFor="let f of favorites">
-        Pokémon #{{ f.pokemonId }}
-        <button (click)="remove(f.id)">Retirer</button>
-      </li>
-    </ul>
-
-    <hr>
-    <p>Test rapide : ajouter un ID</p>
-    <input type="number" [(ngModel)]="tmpId" />
-    <button (click)="toggle(tmpId)">Ajouter/Retirer</button>
-  `
+  imports: [CommonModule, RouterModule, PokemonCardComponent],
+  templateUrl: './favorites.component.html',
+  styleUrls: ['./favorites.component.scss']
 })
-export class FavoritesComponent {
-  favSrv = inject(FavoritesService);
-  auth = inject(AuthService);
+export class FavoritesComponent implements OnInit {
+  private favoritesService = inject(FavoritesService);
+  private pokemonService = inject(PokemonService);
+  private authService = inject(AuthService);
 
-  user = this.auth.currentUser;
-  favorites: any[] = [];
-  tmpId = 1;
+  loading = signal(true);
+  favs = signal<Favorite[]>([]);
+  pokemons = signal<PokemonSummary[]>([]);
 
-  ngOnInit() { this.refresh(); }
+  hasFavorites = computed(() => this.favs().length > 0);
 
-  refresh() {
-    if (!this.user) return;
-    this.favSrv.getByUser(this.user.id).subscribe(f => this.favorites = f);
+  ngOnInit(): void {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      this.loading.set(false);
+      return;
+    }
+
+    this.favoritesService.getByUser(userId).subscribe({
+      next: favs => {
+        this.favs.set(favs);
+
+        if (favs.length === 0) {
+          this.loading.set(false);
+          return;
+        }
+
+        const favIds = favs.map(f => f.pokemonId);
+
+        this.pokemonService.getFirstGen().subscribe({
+          next: all => {
+            const list = all.filter(p => favIds.includes(p.id));
+            this.pokemons.set(list);
+            this.loading.set(false);
+          },
+          error: () => this.loading.set(false)
+        });
+      },
+      error: () => this.loading.set(false)
+    });
   }
 
-  toggle(id: number) {
-    if (!this.user) return;
-    this.favSrv.add(this.user.id, id).subscribe(() => this.refresh());
+  onToggleFavorite(id: number) {
+    const fav = this.favs().find(f => f.pokemonId === id);
+    if (!fav) return;
+
+    this.favoritesService.remove(fav.id).subscribe({
+      next: () => {
+        this.favs.set(this.favs().filter(f => f.id !== fav.id));
+        this.pokemons.set(this.pokemons().filter(p => p.id !== id));
+      }
+    });
   }
-  remove(id: number) { this.favSrv.remove(id).subscribe(() => this.refresh()); }
+
+  isFavorite(_id: number): boolean {
+    return true; 
+  }
 }

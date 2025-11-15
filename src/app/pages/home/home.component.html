@@ -25,6 +25,7 @@
       [id]="p.id"
       [name]="p.name"
       [image]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + p.id + '.png'"
+      [isFavorite]="isFavorite(p.id)"
       (toggleFavorite)="onToggleFavorite($event)">
     </app-pokemon-card>
   </section>

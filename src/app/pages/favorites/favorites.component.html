@@ -1,1 +1,22 @@
-<h1>Favorites</h1>
+<h1>Mes Pokémon favoris</h1>
+
+<section *ngIf="loading(); else contentTpl">
+  Chargement des favoris…
+</section>
+
+<ng-template #contentTpl>
+  <p *ngIf="!hasFavorites()">
+    Vous n'avez encore aucun Pokémon en favori.
+  </p>
+
+  <section class="grid" *ngIf="hasFavorites()">
+    <app-pokemon-card
+      *ngFor="let p of pokemons()"
+      [id]="p.id"
+      [name]="p.name"
+      [image]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + p.id + '.png'"
+      [isFavorite]="isFavorite(p.id)"
+      (toggleFavorite)="onToggleFavorite($event)">
+    </app-pokemon-card>
+  </section>
+</ng-template>

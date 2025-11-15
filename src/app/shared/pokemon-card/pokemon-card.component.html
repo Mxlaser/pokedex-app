@@ -8,6 +8,12 @@
   </header>
 
   <footer class="actions">
-    <button type="button" (click)="onToggleFav()" title="Ajouter/retirer des favoris">★</button>
+    <button
+      type="button"
+      (click)="onToggleFav()"
+      [class.active]="isFavorite"
+      title="Ajouter/retirer des favoris">
+      {{ isFavorite ? '★' : '☆' }}
+    </button>
   </footer>
 </article>

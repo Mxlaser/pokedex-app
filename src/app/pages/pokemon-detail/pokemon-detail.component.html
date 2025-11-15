@@ -20,8 +20,12 @@
           </span>
         </div>
       </div>
-      <button type="button" class="fav" (click)="onToggleFavorite()" title="Ajouter aux favoris">
-        ★
+      <button
+        type="button"
+        class="fav"
+        (click)="onToggleFavorite()"
+        title="Ajouter aux favoris">
+        {{ isFavorite() ? '★' : '☆' }}
       </button>
     </header>
 
