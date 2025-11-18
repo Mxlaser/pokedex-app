@@ -1,9 +1,12 @@
 <section class="toolbar">
   <form [formGroup]="form" class="filters" (submit)="$event.preventDefault()">
-    <input type="search" placeholder="Rechercher par nom…" formControlName="name" />
+    <input
+      type="search"
+      placeholder="Rechercher par nom…"
+      formControlName="name" />
 
     <select formControlName="type">
-      <option value="">Tous les types (à venir)</option>
+      <option value="">Tous les types</option>
       <option *ngFor="let t of types()" [value]="t">{{ t }}</option>
     </select>
 
@@ -25,6 +28,7 @@
       [id]="p.id"
       [name]="p.name"
       [image]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + p.id + '.png'"
+      [isFavorite]="isFavorite(p.id)"
       (toggleFavorite)="onToggleFavorite($event)">
     </app-pokemon-card>
   </section>

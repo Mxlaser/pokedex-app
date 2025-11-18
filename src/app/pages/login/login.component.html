@@ -1,12 +1,32 @@
-<h1>Se connecter</h1>
+<div class="login-page">
+  <div class="login-card">
+    <h1>Se connecter</h1>
 
-<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-  <label>Nom d'utilisateur</label>
-  <input type="text" formControlName="username" />
-  <label>Mot de passe</label>
-  <input type="password" formControlName="password" />
-  <button type="submit" [disabled]="form.invalid || loading">Connexion</button>
-  <p *ngIf="error" style="color:red">{{ error }}</p>
-</form>
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="form-field">
+        <label for="username">Nom d'utilisateur</label>
+        <input id="username" type="text" formControlName="username" />
+      </div>
 
-<p>Pas de compte ? <a routerLink="/register">Créer un compte</a></p>
+      <div class="form-field">
+        <label for="password">Mot de passe</label>
+        <input id="password" type="password" formControlName="password" />
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="form.invalid || loading"
+        class="submit-btn"
+      >
+        Connexion
+      </button>
+
+      <p *ngIf="error" class="error-msg">{{ error }}</p>
+    </form>
+
+    <p class="secondary">
+      Pas de compte ?
+      <a routerLink="/register">Créer un compte</a>
+    </p>
+  </div>
+</div>

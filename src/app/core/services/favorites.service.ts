@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Favorite } from '../models/favorite';
 import { Observable, switchMap } from 'rxjs';
 
-const API = 'http://localhost:3000'; // json-server
+const API = 'http://localhost:3000'; 
 
 @Injectable({ providedIn: 'root' })
 export class FavoritesService {

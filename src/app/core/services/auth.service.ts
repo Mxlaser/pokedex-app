@@ -15,6 +15,10 @@ export class AuthService {
   get currentUser(): User | null { return this._currentUser$.value; }
   get isLoggedIn$() { return this.currentUser$.pipe(map(u => !!u)); }
 
+  getCurrentUserId(): number | null {
+    return this.currentUser?.id ?? null;
+  }
+
   private restore(): User | null {
     try { return JSON.parse(localStorage.getItem('currentUser') || 'null'); }
     catch { return null; }

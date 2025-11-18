@@ -11,7 +11,6 @@ export class PokemonService {
 
   constructor(private http: HttpClient) {}
 
-  // <-- Cette méthode DOIT exister
   getFirstGen(): Observable<PokemonSummary[]> {
     const url = `${this.base}/pokemon?limit=151&offset=0`;
     return this.http.get<{ results: { name: string; url: string }[] }>(url).pipe(
