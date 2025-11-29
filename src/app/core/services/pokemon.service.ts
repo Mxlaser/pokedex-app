@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, forkJoin, mergeMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PokemonSummary } from '../models/pokemon-summary.model';
 import { PokemonDetail } from '../models/pokemon-detail.model';
@@ -14,12 +14,18 @@ export class PokemonService {
   getFirstGen(): Observable<PokemonSummary[]> {
     const url = `${this.base}/pokemon?limit=151&offset=0`;
     return this.http.get<{ results: { name: string; url: string }[] }>(url).pipe(
-      map(res =>
-        res.results.map(r => ({
-          id: this.extractIdFromUrl(r.url),
-          name: r.name,
-        }))
-      )
+      mergeMap(res => {
+        const details$ = res.results.map(r =>
+          this.getById(this.extractIdFromUrl(r.url)).pipe(
+            map(detail => ({
+              id: detail.id,
+              name: detail.name,
+              types: detail.types.map(t => t.type.name), 
+            } as PokemonSummary)) 
+          )
+        );
+        return forkJoin(details$);
+      })
     );
   }
 
