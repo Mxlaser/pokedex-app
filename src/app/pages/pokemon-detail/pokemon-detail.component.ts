@@ -7,11 +7,13 @@ import { PokemonDetail } from '../../core/models/pokemon-detail.model';
 import { FavoritesService } from '../../core/services/favorites.service';
 import { Favorite } from '../../core/models/favorite';
 import { AuthService } from '../../core/services/auth.service'; 
+import { CapitalizePipe } from '../../shared/pipes/capitalize.pipe'; 
+import { TypeColorDirective } from '../../shared/directives/type-color.directive';
 
 @Component({
   selector: 'app-pokemon-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CapitalizePipe, TypeColorDirective],
   templateUrl: './pokemon-detail.component.html',
   styleUrls: ['./pokemon-detail.component.scss']
 })
