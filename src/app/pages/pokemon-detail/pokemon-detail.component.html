@@ -16,14 +16,12 @@
       />
 
       <div class="title">
-        <h1>#{{ data()?.id }} {{ nameCap() }}</h1>
-        <div class="types">
+        <h1>#{{ data()?.id }} {{ data()?.name | capitalize }}</h1> <div class="types">
           <span
             class="type"
             *ngFor="let t of data()?.types; trackBy: trackByType"
-          >
-            {{ t.type.name }}
-          </span>
+            [appTypeColor]="t.type.name" >
+            {{ t.type.name | capitalize }} </span>
         </div>
       </div>
 

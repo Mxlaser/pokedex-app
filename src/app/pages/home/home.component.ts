@@ -48,8 +48,10 @@ export class HomeComponent implements OnInit {
       out = out.filter(p => p.name.toLowerCase().includes(n));
     }
 
-    // (filtre type à implémenter plus tard si tu veux vraiment le brancher)
-
+    if (type) {
+      out = out.filter(p => p.types.includes(type));
+    }
+    
     out = [...out].sort((a, b) =>
       sort === 'name'
         ? a.name.localeCompare(b.name)
